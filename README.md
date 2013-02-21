@@ -17,7 +17,7 @@ php composer.phar require mattsches/vulnerabilities-bundle:dev-master
 Setup
 -----
 
-Add the following to your `app/config/config_dev.yml` (you only want to use this in the dev environment)
+Add the following to your `app/config/config_dev.yml` (you only want to use this in the DEV environment)
 
 ```yml
 mattsches_vulnerabilities:
