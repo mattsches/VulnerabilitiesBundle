@@ -1,0 +1,24 @@
+parameters:
+    mattsches_vulnerabilities.composer_lock_loader.class: Mattsches\VulnerabilitiesBundle\Service\ComposerLockLoader
+    mattsches_vulnerabilities.data_collector.vulnerabilities.class: Mattsches\VulnerabilitiesBundle\DataCollector\VulnerabilitiesDataCollector
+    mattsches_vulnerabilities.filesystem_cache.class: Doctrine\Common\Cache\FilesystemCache
+
+services:
+    mattsches_vulnerabilities.composer_lock_loader:
+        class: %mattsches_vulnerabilities.composer_lock_loader.class%
+        arguments: [ "%kernel.root_dir%/../composer.lock" ]
+
+    mattsches_vulnerabilities.filesystem_cache:
+        class: %mattsches_vulnerabilities.filesystem_cache.class%
+        arguments: [ %mattsches_vulnerabilities.filesystem_cache_path% ]
+
+    mattsches_vulnerabilities.security_checker:
+        class: SensioLabs\Security\SecurityChecker
+
+    mattsches_vulnerabilities.data_collector.vulnerabilities:
+        class: %mattsches_vulnerabilities.data_collector.vulnerabilities.class%
+        arguments: [ @mattsches_vulnerabilities.security_checker, @mattsches_vulnerabilities.composer_lock_loader, @mattsches_vulnerabilities.filesystem_cache ]
+        calls:
+            - [ setCacheLifeTime, [ %mattsches_vulnerabilities.filesystem_cache_ttl% ] ]
+        tags:
+            - { name: data_collector, template: 'MattschesVulnerabilitiesBundle:Collector:vulnerabilities', id: 'vulnerabilities' }

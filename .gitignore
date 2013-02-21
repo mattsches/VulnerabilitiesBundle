@@ -1,0 +1,23 @@
+### PhPStorm ###
+.idea/
+### Symfony2 ###
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+/vendor/
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+
+### Composer ###
+composer.lock
+
+### Misc ###
+*~
+/phpunit.xml

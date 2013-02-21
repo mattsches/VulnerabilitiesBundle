@@ -1,0 +1,73 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.data %}
+        {% set icon %}
+            {% if collector.data.count > 0 %}
+                <span style="font-size: 24px; font-weight: bold; color: #a33;">&#9888;</span>
+                <span class="sf-toolbar-status sf-toolbar-status-red" style="margin-top: -10px;">{{ collector.data.count }}</span>
+            {% else %}
+                <span style="font-size: 24px; font-weight: bold; color: #2f2f2f;">&#9888;</span>
+            {% endif %}
+        {% endset %}
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                {% if collector.data.status == 0 %}
+                <b>No data available</b>
+                {% else %}
+                <b>Vulnerabilities</b>
+                <span class="sf-toolbar-status{% if collector.data.count > 0 %} sf-toolbar-status-red{% endif %}">{{ collector.data.count }}</span>
+                {% endif %}
+            </div>
+        {% endset %}
+        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon" style="font-size: 32px; font-weight: bold; color: #2f2f2f;">&#9888;</span>
+    <strong>Security Advisories</strong>
+    {% if collector.data.status == 1 %}
+    <span class="count">
+        <span>{{ collector.data.count }}</span>
+    </span>
+    {% endif %}
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Security Advisories</h2>
+    <p>by <a href="https://security.sensiolabs.org/">SensioLabs Security Advisories Checker</a></p>
+    {% if collector.data.status == 0 %}
+        <div>
+            <h3>No data available</h3>
+            The client could not connect to the vulnerabilities database. Maybe you are offline?
+        </div>
+    {% elseif collector.data.count == 0 %}
+        <div>
+            <h3>Great!</h3>
+            The checker did not detect known vulnerabilities in your project dependencies.
+        </div>
+    {% else %}
+        <div style="color: #b94a48;background-color: #f2dede;border-color: #eed3d7;padding: 8px 35px 8px 14px; margin-bottom: 20px; text-shadow: 0 1px 0 rgba(255,255,255,0.5);border: 1px solid #fbeed5;border-radius:4px;">
+            <h3>Caution</h3>
+            The checker detected <strong style="color:#b94a48;">{{ collector.data.count }}</strong>
+            package(s) that have known vulnerabilities in your project. We
+            recommend you to check the related security advisories and upgrade
+            these dependencies.
+        </div>
+        <ul>
+        {% for package, detail in collector.data.details %}
+            <li>
+                <h4 style="font-weight: bold; margin: 10px 0; line-height: 20px;">{{ package }} ({{ detail.version }})</h4>
+                <ol style="margin: 0 0 10px 25px;">
+                {% for advisory in detail.advisories %}
+                    <li style="line-height: 20px; list-style-type: decimal;"><a href="{{ advisory.link }}">{{ advisory.title }}</a></li>
+                {% endfor %}
+                </ol>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

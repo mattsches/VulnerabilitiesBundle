@@ -1,0 +1,10 @@
+{"zendframework\/zendframework": {
+    "version": "2.0.1",
+    "advisories": {
+        "zendframework\/zendframework\/ZF2012-04.yaml": {
+            "title": "Potential Proxy Injection Vulnerabilities in Multiple Zend Framework 2 Components",
+            "link": "http:\/\/framework.zend.com\/security\/advisory\/ZF2012-04",
+            "cve": ""
+        }
+    }
+}}
