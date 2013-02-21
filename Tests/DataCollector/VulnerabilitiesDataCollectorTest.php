@@ -44,7 +44,7 @@ class VulnerabilitiesDataCollectorTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('check')
             ->will($this->returnValue($response));
-        $loader = new ComposerLockLoader(__DIR__ . '/Fixtures/composer.lock');
+        $loader = new ComposerLockLoader(__DIR__ . '/Fixtures/composer_test.lock');
         $this->object = new VulnerabilitiesDataCollector($this->checker, $loader);
         $this->object->collect(new Request(), new Response());
         /* @var Vulnerabilities $data */

@@ -22,7 +22,7 @@ class ComposerLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->object = new ComposerLockLoader(__DIR__ . '/../DataCollector/Fixtures/composer.lock');
+        $this->object = new ComposerLockLoader(__DIR__ . '/../DataCollector/Fixtures/composer_test.lock');
     }
 
     /**
@@ -30,7 +30,7 @@ class ComposerLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTempFileAndContents()
     {
-        $contents = file_get_contents(__DIR__ . '/../DataCollector/Fixtures/composer.lock');
+        $contents = file_get_contents(__DIR__ . '/../DataCollector/Fixtures/composer_test.lock');
         $this->assertSame($contents, file_get_contents($this->object->getComposerLock()));
     }
 }
