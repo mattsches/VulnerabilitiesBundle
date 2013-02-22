@@ -27,5 +27,9 @@ class MattschesVulnerabilitiesExtension extends Extension
             'mattsches_vulnerabilities.filesystem_cache_path',
             $config['filesystem_cache_path']
         );
+        $container->setParameter(
+            'mattsches_vulnerabilities.filesystem_cache_path',
+            $config['filesystem_cache_ttl']
+        );
     }
 }
