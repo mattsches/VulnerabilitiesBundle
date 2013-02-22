@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('filesystem_cache_path')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('filesystem_cache_ttl')->isRequired()->cannotBeEmpty()->end()
             ->end()
             ;
         return $treeBuilder;
